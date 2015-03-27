@@ -1,0 +1,10 @@
+platforms/
+plugins/
+bower_components/
+hooks/
+npm-debug.log
+www/js/
+www/css/style.css
+node_modules/
+.envrc
+resources/
