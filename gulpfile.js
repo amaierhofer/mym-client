@@ -14,7 +14,7 @@ var paths = {
   coffee: ['./coffee/*.coffee']
 };
 
-gulp.task('default', ['sass', 'coffee']);
+gulp.task('default', ['sass', 'coffee', 'chrome_gcm']);
 
 gulp.task('sass', function(done) {
   gulp.src(paths.sass)
@@ -31,10 +31,16 @@ gulp.task('coffee', function(done) {
   .pipe(concat('application.js'))
   .pipe(replace(/\$GCM_SENDER_ID/, process.env.GCM_SENDER_ID))
   .pipe(gulp.dest('./www/js'))
-  .on('end', done)
-})
+  .on('end', done);
+});
+
+gulp.task('chrome_gcm', function() {
+   gulp.src('./chrome_gcm/*')
+    .pipe(replace(/\$GCM_SENDER_ID/, process.env.GCM_SENDER_ID))
+    .pipe(gulp.dest('./www/chrome_gcm'));
+});
 
 gulp.task('watch', function() {
   gulp.watch(paths.sass, ['sass']);
-  gulp.watch(paths.coffee, ['coffee'])
+  gulp.watch(paths.coffee, ['coffee']);
 });
