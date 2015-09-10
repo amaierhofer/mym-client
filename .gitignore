@@ -5,6 +5,7 @@ hooks/
 npm-debug.log
 www/js/
 www/css/style.css
+www/chrome_gcm
 node_modules/
 .envrc
 resources/

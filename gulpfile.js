@@ -11,7 +11,8 @@ var coffee = require('gulp-coffee');
 
 var paths = {
   sass: ['./scss/*.scss'],
-  coffee: ['./coffee/*.coffee']
+  coffee: ['./coffee/*.coffee'],
+  chrome_gcm: ['./chrome_gcm/*']
 };
 
 gulp.task('default', ['sass', 'coffee', 'chrome_gcm']);
@@ -35,7 +36,7 @@ gulp.task('coffee', function(done) {
 });
 
 gulp.task('chrome_gcm', function() {
-   gulp.src('./chrome_gcm/*')
+   gulp.src(paths.chrome_gcm)
     .pipe(replace(/\$GCM_SENDER_ID/, process.env.GCM_SENDER_ID))
     .pipe(gulp.dest('./www/chrome_gcm'));
 });
@@ -43,4 +44,5 @@ gulp.task('chrome_gcm', function() {
 gulp.task('watch', function() {
   gulp.watch(paths.sass, ['sass']);
   gulp.watch(paths.coffee, ['coffee']);
+  gulp.watch(paths.chrome_gcm, ['coffee']);
 });
