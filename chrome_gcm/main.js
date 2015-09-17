@@ -17,18 +17,17 @@ function subscribe() {
         isPushEnabled = true;
       })
       .catch(function(e) {
-        console.log(e);
         if (Notification.permission === 'denied') {
           // The user denied the notification permission which
           // means we failed to subscribe and the user will need
           // to manually change the notification permission to
           // subscribe to push messages
-          window.Demo.debug.log('Permission for Notifications was denied');
+          console.log('Permission for Notifications was denied');
         } else {
           // A problem occurred with the subscription, this can
           // often be down to an issue or lack of the gcm_sender_id
           // and / or gcm_user_visible_only
-          window.Demo.debug.log('Unable to subscribe to push.', e);
+          console.log('Unable to subscribe to push.', e);
         }
       });
   });
@@ -38,7 +37,7 @@ function subscribe() {
 function initialiseState() {
   // Are Notifications supported in the service worker?
   if (!('showNotification' in ServiceWorkerRegistration.prototype)) {
-    window.Demo.debug.log('Notifications aren\'t supported.');
+    console.log('Notifications aren\'t supported.');
     return;
   }
 
@@ -46,13 +45,13 @@ function initialiseState() {
   // If its denied, it's a permanent block until the
   // user changes the permission
   if (Notification.permission === 'denied') {
-    window.Demo.debug.log('The user has blocked notifications.');
+    console.log('The user has blocked notifications.');
     return;
   }
 
   // Check if push messaging is supported
   if (!('PushManager' in window)) {
-    window.Demo.debug.log('Push messaging isn\'t supported.');
+    console.log('Push messaging isn\'t supported.');
     return;
   }
 
@@ -83,7 +82,7 @@ function initialiseState() {
         console.log(subscription.endpoint);
       })
       .catch(function(err) {
-        window.Demo.debug.log('Error during getSubscription()', err);
+        console.log('Error during getSubscription()', err);
       });
   });
 }
@@ -96,6 +95,6 @@ window.addEventListener('load', function() {
     navigator.serviceWorker.register('./service-worker.js')
     .then(initialiseState);
   } else {
-    window.Demo.debug.log('Service workers aren\'t supported in this browser.');
+    console.log('Service workers aren\'t supported in this browser.');
   }
 });
