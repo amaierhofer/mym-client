@@ -6,6 +6,8 @@ npm-debug.log
 www/js/
 www/css/style.css
 www/chrome_gcm
+www/service-worker.js
 node_modules/
 .envrc
+.nvmrc
 resources/

@@ -1,9 +1,5 @@
 'use strict';
 
-var API_KEY = window.GoogleSamples.Config.gcmAPIKey;
-var GCM_ENDPOINT = 'https://android.googleapis.com/gcm/send';
-
-var curlCommandDiv = document.querySelector('.js-curl-command');
 var isPushEnabled = false;
 
 function subscribe() {
@@ -70,7 +66,7 @@ function initialiseState() {
         }
 
         // Keep your server in sync with the latest subscription
-        sendSubscriptionToServer(subscription);
+        // sendSubscriptionToServer(subscription);
 
         // Set your UI to show they have subscribed for
         // push messages

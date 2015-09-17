@@ -8,6 +8,7 @@ var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
 var coffee = require('gulp-coffee');
+var symlink = require('gulp-sym');
 
 var paths = {
   sass: ['./scss/*.scss'],
@@ -15,7 +16,7 @@ var paths = {
   chrome_gcm: ['./chrome_gcm/*']
 };
 
-gulp.task('default', ['sass', 'coffee', 'chrome_gcm']);
+gulp.task('default', ['sass', 'coffee', 'chrome_gcm', 'symlink']);
 
 gulp.task('sass', function(done) {
   gulp.src(paths.sass)
@@ -41,8 +42,13 @@ gulp.task('chrome_gcm', function() {
     .pipe(gulp.dest('./www/chrome_gcm'));
 });
 
+gulp.task('symlink', function() {
+  gulp.src('./www/chrome_gcm/service-worker.js')
+    .pipe(symlink('./www/service-worker.js', { force: true }));
+});
+
 gulp.task('watch', function() {
   gulp.watch(paths.sass, ['sass']);
   gulp.watch(paths.coffee, ['coffee']);
-  gulp.watch(paths.chrome_gcm, ['coffee']);
+  gulp.watch(paths.chrome_gcm, ['chrome_gcm']);
 });
