@@ -6,13 +6,18 @@ function subscribe() {
   // Disable the button so it can't be changed while
   // we process the permission request
 
+
   navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
     serviceWorkerRegistration.pushManager.subscribe({userVisibleOnly: true})
       .then(function(subscription) {
+        console.log(subscription.subscriptionId);
+        console.log(subscription.endpoint);
+
         // The subscription was successful
         isPushEnabled = true;
       })
       .catch(function(e) {
+        console.log(e);
         if (Notification.permission === 'denied') {
           // The user denied the notification permission which
           // means we failed to subscribe and the user will need
@@ -62,6 +67,8 @@ function initialiseState() {
         if (!subscription) {
           // We aren’t subscribed to push, so set UI
           // to allow the user to enable push
+          console.log('no subscription found ..');
+          subscribe();
           return;
         }
 
@@ -71,6 +78,9 @@ function initialiseState() {
         // Set your UI to show they have subscribed for
         // push messages
         isPushEnabled = true;
+        console.log('subscription found ..');
+        console.log(subscription.subscriptionId);
+        console.log(subscription.endpoint);
       })
       .catch(function(err) {
         window.Demo.debug.log('Error during getSubscription()', err);
@@ -79,7 +89,6 @@ function initialiseState() {
 }
 
 window.addEventListener('load', function() {
-  subscribe();
 
   // Check that service workers are supported, if so, progressively
   // enhance and add push messaging support, otherwise continue without it.
